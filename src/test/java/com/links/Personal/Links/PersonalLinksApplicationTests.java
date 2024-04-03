@@ -1,10 +1,10 @@
-package com.my.persional.links;
+package com.links.Personal.Links;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class ApplicationTests {
+class PersonalLinksApplicationTests {
 
 	@Test
 	void contextLoads() {

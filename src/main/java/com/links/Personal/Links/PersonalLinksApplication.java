@@ -1,13 +1,13 @@
-package com.my.persional.links;
+package com.links.Personal.Links;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class Application {
+public class PersonalLinksApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(Application.class, args);
+		SpringApplication.run(PersonalLinksApplication.class, args);
 	}
 
 }
