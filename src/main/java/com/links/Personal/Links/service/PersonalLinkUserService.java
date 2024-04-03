@@ -1,6 +1,7 @@
 package com.links.Personal.Links.service;
 
 import com.links.Personal.Links.entity.PersonalLinkUser;
+import com.links.Personal.Links.exception.GlobalException;
 import com.links.Personal.Links.repository.PersonalLinkUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,13 +23,13 @@ public class PersonalLinkUserService {
     public PersonalLinkUser getByIdPersonalLinkUser(Long userId) {
         return userRepository
                 .findById(userId)
-                .orElseThrow();
+                .orElseThrow(() -> new GlobalException("User not Found"));
     }
 
     // CREATE
     public PersonalLinkUser createPersonalLinkUser(PersonalLinkUser personalLinkUser) {
         if(personalLinkUser.getUserLinks().isEmpty()) {
-            throw new RuntimeException();
+            throw new GlobalException("Links are mandatory");
         }
         return userRepository.save(personalLinkUser);
     }
@@ -36,12 +37,19 @@ public class PersonalLinkUserService {
     // UPDATE
     public PersonalLinkUser updatePersonalLinkUser(Long userId, PersonalLinkUser personalLinkUser) {
         if(personalLinkUser.getUserLinks().isEmpty()) {
-            throw new RuntimeException();
+            throw new GlobalException("Links are mandatory");
         }
-        PersonalLinkUser user = userRepository.findById(userId).orElseThrow();
-        if (!personalLinkUser.getPkUserId().equals(user.getPkUserId()) ||
-                !personalLinkUser.getUserEmail().equals(user.getUserEmail())) {
-            throw new RuntimeException();
+
+        PersonalLinkUser user = userRepository
+                .findById(userId)
+                .orElseThrow(() -> new GlobalException("User not Found"));
+
+        if (!personalLinkUser.getPkUserId().equals(user.getPkUserId())) {
+            throw new GlobalException("Access Deny");
+        }
+
+        if (!personalLinkUser.getUserEmail().equals(user.getUserEmail())) {
+            throw new GlobalException("Email can't be change");
         }
 
         user.setUserName(personalLinkUser.getUserName());
