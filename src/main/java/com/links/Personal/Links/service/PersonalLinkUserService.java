@@ -53,8 +53,10 @@ public class PersonalLinkUserService {
     // DEACTIVATE
     public Boolean deactivatePersonalLinkUser(Long userId) {
         PersonalLinkUser user = userRepository.findById(userId).orElseThrow();
-        user.setActive('N');
-        userRepository.save(user);
+        if (user.getActive() != 'F') {
+            user.setActive('F');
+            userRepository.save(user);
+        }
         return true;
     }
 
