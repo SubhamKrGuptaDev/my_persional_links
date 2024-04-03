@@ -17,6 +17,7 @@ public class PersonalLinkUser {
     private String userName;
     private String userEmail;
     private String userPassword;
+    private Character active;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<UserLinks> userLinks;
