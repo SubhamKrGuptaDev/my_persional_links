@@ -3,6 +3,10 @@ package com.links.Personal.Links.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
+import java.time.LocalDateTime;
 
 @Data
 @Entity
@@ -15,8 +19,16 @@ public class UserLinks {
     private String linkName;
     private String link;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "fk_user_id")
-    private PersonalLinkUser user;
+
+    @Column(name = "create_time", nullable = false, updatable = false)
+    @CreationTimestamp
+    private LocalDateTime createTime;
+
+    @Column(name = "update_time", nullable = false)
+    @UpdateTimestamp
+    private LocalDateTime updateTime;
+
+    @Column(name = "fk_user_id")
+    private Long fkUserId;
 
 }
