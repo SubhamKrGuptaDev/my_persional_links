@@ -6,5 +6,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface PersonalLinkUserRepository extends JpaRepository<PersonalLinkUser, Long> {
 
 
+    Boolean existsByUsername(String username);
+
+    Boolean existsByUserEmail(String email);
 
 }

@@ -23,8 +23,8 @@ public class PersonalLinkUserController {
         return successResponse200(personalLinkUserService.getAllPersonalLinkUser());
     }
 
-    @GetMapping
-    public ResponseEntity<PersonalLinkUser> getUserById(@RequestParam Long userId) {
+    @GetMapping(params = "userId")
+    public ResponseEntity<PersonalLinkUser> getUserById(@RequestParam(name = "userId") Long userId) {
         return successResponse200(personalLinkUserService.getByIdPersonalLinkUser(userId));
     }
 
