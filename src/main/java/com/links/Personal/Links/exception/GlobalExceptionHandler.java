@@ -19,7 +19,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponse> getException(Exception ex) {
-        return new ResponseEntity<>(new ErrorResponse(400, ex.getMessage()),
+        return new ResponseEntity<>(new ErrorResponse(500, ex.getMessage()),
                 HttpStatus.BAD_REQUEST);
     }
 
