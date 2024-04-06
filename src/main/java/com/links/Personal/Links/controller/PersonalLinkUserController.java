@@ -1,5 +1,6 @@
 package com.links.Personal.Links.controller;
 
+import com.links.Personal.Links.dto.PersonalLinkUserDto;
 import com.links.Personal.Links.entity.PersonalLinkUser;
 import com.links.Personal.Links.service.PersonalLinkUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,7 @@ public class PersonalLinkUserController {
     private PersonalLinkUserService personalLinkUserService;
 
     @GetMapping
-    public ResponseEntity<List<PersonalLinkUser>> getAllUsers() {
+    public ResponseEntity<List<PersonalLinkUserDto>> getAllUsers() {
         return successResponse200(personalLinkUserService.getAllPersonalLinkUser());
     }
 

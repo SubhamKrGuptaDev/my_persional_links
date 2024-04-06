@@ -1,5 +1,6 @@
 package com.links.Personal.Links.service;
 
+import com.links.Personal.Links.dto.PersonalLinkUserDto;
 import com.links.Personal.Links.entity.PersonalLinkUser;
 import com.links.Personal.Links.entity.UserLinks;
 import com.links.Personal.Links.exception.GlobalException;
@@ -21,15 +22,17 @@ public class PersonalLinkUserService {
     private UserLinksRepository userLinksRepository;
 
     // GET ALL
-    public List<PersonalLinkUser> getAllPersonalLinkUser() {
-        return userRepository.findAll();
+    public List<PersonalLinkUserDto> getAllPersonalLinkUser() {
+        return userRepository.getAllPersonalLinkUser();
     }
 
     // GET BY ID
     public PersonalLinkUser getByIdPersonalLinkUser(Long userId) {
-        return userRepository
+        PersonalLinkUser userObject = userRepository
                 .findById(userId)
                 .orElseThrow(() -> new GlobalException("User not Found"));
+        setUserLinks(userObject);
+        return userObject;
     }
 
     // CREATE
@@ -103,6 +106,27 @@ public class PersonalLinkUserService {
 
     private boolean checkUsername(String username) {
         return userRepository.existsByUsername(username);
+    }
+
+    public PersonalLinkUser getUserByEmail(String email) {
+        PersonalLinkUser user = userRepository.findByUserEmail(email)
+                .orElseThrow(() -> new GlobalException("Email not found"));
+
+        setUserLinks(user);
+
+        return user;
+    }
+
+    public PersonalLinkUser getUserByUsername(String username) {
+        PersonalLinkUser user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new GlobalException("Username not found"));
+        setUserLinks(user);
+        return user;
+    }
+
+    // Set UserLinks
+    private void setUserLinks(PersonalLinkUser user) {
+        user.setUserLinks(userLinksRepository.findByFkUserId(user.getPkUserId()));
     }
 
 }
